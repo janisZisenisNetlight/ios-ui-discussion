@@ -3,6 +3,8 @@ import UIKit
 @UIApplicationMain
 class AppDelegate: UIResponder, UIApplicationDelegate {
     var window: UIWindow?
+    
+    var router: Router?
 
     func application(_ application: UIApplication, didFinishLaunchingWithOptions launchOptions: [UIApplication.LaunchOptionsKey: Any]?) -> Bool {
         window = UIWindow(frame: UIScreen.main.bounds)
@@ -11,8 +13,8 @@ class AppDelegate: UIResponder, UIApplicationDelegate {
         window?.rootViewController = navigationController
         window?.makeKeyAndVisible()
         
-        let router = WelcomeSceneFactory().makeScene()
-        navigationController.viewControllers = [router.viewController]
+        router = Router(navigationController: navigationController)
+        router?.showOverview()
         
         return true
     }
