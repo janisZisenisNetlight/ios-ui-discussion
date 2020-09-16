@@ -43,8 +43,8 @@ enum OverviewModel {
             let balance: BalanceViewModel
         }
     }
-    
-    enum ShowHistory {
+
+    enum RouteToHistory {
         struct Request {
         }
     }

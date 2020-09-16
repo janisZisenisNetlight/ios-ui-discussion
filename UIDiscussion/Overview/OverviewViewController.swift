@@ -31,7 +31,11 @@ protocol OverviewInteracting {
     func handleViewDidLoad(_ request: OverviewModel.ViewDidLoad.Request)
     func handleWithDraw(_ request: OverviewModel.WithDraw.Request)
     func handleDeposit(_ request: OverviewModel.Deposit.Request)
-    func handleShowHistory(_ request: OverviewModel.ShowHistory.Request)
+    func handleRouteToHistory(_ request: OverviewModel.RouteToHistory.Request)
+}
+
+protocol OverviewRouting {
+    func routeToHistory(history: AccountHistory)
 }
 
 class OverviewViewController: UIViewController {
@@ -44,10 +48,10 @@ class OverviewViewController: UIViewController {
     private let withDraw = UIButton(type: .system)
     private let deposit = UIButton(type: .system)
     private let showHistory = UIButton(type: .system)
-    
-    init(interactor: OverviewInteractor) {
+
+    init(interactor: OverviewInteracting) {
         self.interactor = interactor
-        
+
         super.init(nibName: nil, bundle: nil)
     }
     
@@ -73,10 +77,9 @@ class OverviewViewController: UIViewController {
         amount.text = nil
         interactor.handleDeposit(request)
     }
-    
-    @objc private func onShowHistory() {
-        let request = OverviewModel.ShowHistory.Request()
-        interactor.handleShowHistory(request)
+
+    @objc private func onRouteToHistory() {
+        interactor.handleRouteToHistory(.init())
     }
 }
 
@@ -107,7 +110,7 @@ extension OverviewViewController {
         title = Constants.Text.title
         view.directionalLayoutMargins = Constants.Layout.insets
         view.backgroundColor = Constants.Color.background
-        
+
         let firstNameLabel = UILabel()
         firstNameLabel.text = Constants.Text.firstName
         let familyNameLabel = UILabel()
@@ -127,7 +130,7 @@ extension OverviewViewController {
         deposit.layer.borderColor = Constants.Color.border.cgColor
         deposit.layer.borderWidth = Constants.Layout.borderWidth
         showHistory.setTitle(Constants.Text.showHistory, for: .normal)
-        showHistory.addTarget(self, action: #selector(onShowHistory), for: .primaryActionTriggered)
+        showHistory.addTarget(self, action: #selector(onRouteToHistory), for: .primaryActionTriggered)
         showHistory.layer.cornerRadius = Constants.Layout.cornerRadius
         showHistory.layer.borderColor = Constants.Color.border.cgColor
         showHistory.layer.borderWidth = Constants.Layout.borderWidth

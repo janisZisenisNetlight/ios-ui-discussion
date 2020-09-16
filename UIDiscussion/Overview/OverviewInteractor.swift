@@ -6,10 +6,6 @@ protocol OverviewPresenting {
     func presentDeposit(_ response: OverviewModel.Deposit.Response)
 }
 
-protocol OverviewRouting: AnyObject {
-    func routeToHistory(history: AccountHistory)
-}
-
 protocol BankAccount: AccountHistory {
     var owner: AccountOwner { get }
     var balance: Double { get }
@@ -20,14 +16,15 @@ protocol BankAccount: AccountHistory {
 class OverviewInteractor: OverviewInteracting {
     private let presenter: OverviewPresenting
     private let account: BankAccount
-    weak private var router: OverviewRouting?
+    private let router: OverviewRouting
 
     init(presenter: OverviewPresenting, account: BankAccount, router: OverviewRouting) {
         self.presenter = presenter
         self.account = account
         self.router = router
+
     }
-    
+
     func handleViewDidLoad(_ request: OverviewModel.ViewDidLoad.Request) {
         let response = OverviewModel.ViewDidLoad.Response(owner: account.owner, balance: account.balance)
         presenter.presentViewDidLoad(response)
@@ -54,9 +51,9 @@ class OverviewInteractor: OverviewInteracting {
         let response = OverviewModel.Deposit.Response(balance: account.balance)
         presenter.presentDeposit(response)
     }
-    
-    func handleShowHistory(_ request: OverviewModel.ShowHistory.Request) {
-        router?.routeToHistory(history: account)
+
+    func handleRouteToHistory(_ request: OverviewModel.RouteToHistory.Request) {
+        router.routeToHistory(history: account)
     }
 }
 
