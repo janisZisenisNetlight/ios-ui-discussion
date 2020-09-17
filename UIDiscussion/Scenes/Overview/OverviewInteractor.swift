@@ -6,6 +6,10 @@ protocol OverviewPresenting {
     func presentDeposit(_ response: OverviewModel.Deposit.Response)
 }
 
+protocol OverviewRouting {
+    func routeToHistory(history: AccountHistory)
+}
+
 protocol BankAccount: AccountHistory {
     var owner: AccountOwner { get }
     var balance: Double { get }
@@ -26,7 +30,10 @@ class OverviewInteractor: OverviewInteracting {
     }
 
     func handleViewDidLoad(_ request: OverviewModel.ViewDidLoad.Request) {
-        let response = OverviewModel.ViewDidLoad.Response(owner: account.owner, balance: account.balance)
+        let owner = account.owner
+        let balance = account.balance
+
+        let response = OverviewModel.ViewDidLoad.Response(owner: owner, balance: balance)
         presenter.presentViewDidLoad(response)
     }
     

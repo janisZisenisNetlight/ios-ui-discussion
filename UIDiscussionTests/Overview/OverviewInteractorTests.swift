@@ -8,9 +8,9 @@ class OverviewInteractorTests: XCTestCase {
     lazy var sut = OverviewInteractor(presenter: presenting, account: account, router: routing)
     
     func testHandleShowHistory_ShouldRouteToHistoryWithItsAccount() throws {
-        let request = OverviewModel.ShowHistory.Request()
+        let request = OverviewModel.RouteToHistory.Request()
         
-        sut.handleShowHistory(request)
+        sut.handleRouteToHistory(request)
         
         let actual = routing.receivedHistory
         let expected = account

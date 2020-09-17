@@ -15,6 +15,7 @@ class OverviewPresenter: OverviewPresenting {
             familyName: response.owner.familyName,
             balance: .init(response.balance)
         )
+
         display?.displayViewDidLoad(viewModel)
     }
     

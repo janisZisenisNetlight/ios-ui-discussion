@@ -34,10 +34,6 @@ protocol OverviewInteracting {
     func handleRouteToHistory(_ request: OverviewModel.RouteToHistory.Request)
 }
 
-protocol OverviewRouting {
-    func routeToHistory(history: AccountHistory)
-}
-
 class OverviewViewController: UIViewController {
     private let interactor: OverviewInteracting
 
@@ -62,8 +58,9 @@ class OverviewViewController: UIViewController {
     override func viewDidLoad() {
         super.viewDidLoad()
         setupView()
-        
-        interactor.handleViewDidLoad(.init())
+
+        let request = OverviewModel.ViewDidLoad.Request()
+        interactor.handleViewDidLoad(request)
     }
     
     @objc private func onWithDraw() {
