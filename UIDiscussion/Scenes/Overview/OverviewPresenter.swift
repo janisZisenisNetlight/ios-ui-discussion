@@ -13,7 +13,7 @@ class OverviewPresenter: OverviewPresenting {
         let viewModel = OverviewModel.ViewDidLoad.ViewModel(
             firstName: response.owner.firstName,
             familyName: response.owner.familyName,
-            balance: .init(response.balance)
+            balance: OverviewModel.BalanceViewModel(response.balance)
         )
 
         display?.displayViewDidLoad(viewModel)
@@ -21,14 +21,14 @@ class OverviewPresenter: OverviewPresenting {
     
     func presentWithDraw(_ response: OverviewModel.WithDraw.Response) {
         let viewModel = OverviewModel.WithDraw.ViewModel(
-            balance: .init(response.balance)
+            balance: OverviewModel.BalanceViewModel(response.balance)
         )
         display?.displayWithDraw(viewModel)
     }
     
     func presentDeposit(_ response: OverviewModel.Deposit.Response) {
         let viewModel = OverviewModel.Deposit.ViewModel(
-            balance: .init(response.balance)
+            balance: OverviewModel.BalanceViewModel(response.balance)
         )
         display?.displayDeposit(viewModel)
     }
